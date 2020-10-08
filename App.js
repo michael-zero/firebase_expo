@@ -34,18 +34,22 @@ export default function App() {
     
   }
 
-  const receber = () => {
-    db.collection("pessoas").get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-          console.log(`${doc.id} => ${doc.data()}`);
-      });
-  });
+  const receber = async () => {
+    const query = await db.collection("pessoas").get()
+    
+    query.forEach((doc) => {
+         // const {nome} = doc.data();
+         console.log(`${doc.id} => ${doc.data().nome}`);
+    });
   }
 
   return (
     <View style={styles.container}>
-      <TextInput onChangeText={setNome} style={styles.input}/>
-      <Button title='enviar' onPress={receber}/>
+      <TextInput onChangeText={setNome} style={styles.input} placeholder='Digite um nome'/>
+      <View style={{flexDirection: 'row', width: '100%', justifyContent: 'space-around', }}>
+        <Button title='enviar' onPress={enviar}/>
+        <Button title='buscar' onPress={receber}/>
+      </View>
     </View>
   );
 }
