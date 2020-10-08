@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
+import { Button, StyleSheet, Text, View, TextInput, LogBox } from 'react-native';
 
 //Imports necessários
 import * as firebase from 'firebase'
@@ -11,6 +11,8 @@ import {firebaseConfig} from './config'
 if(firebase.apps.length === 0){
   firebase.initializeApp(firebaseConfig)
 }
+
+LogBox.ignoreLogs(['Setting a timer']);
 
 const db = firebase.firestore()
 
@@ -32,10 +34,18 @@ export default function App() {
     
   }
 
+  const receber = () => {
+    db.collection("pessoas").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+          console.log(`${doc.id} => ${doc.data()}`);
+      });
+  });
+  }
+
   return (
     <View style={styles.container}>
       <TextInput onChangeText={setNome} style={styles.input}/>
-      <Button title='enviar' onPress={enviar}/>
+      <Button title='enviar' onPress={receber}/>
     </View>
   );
 }
