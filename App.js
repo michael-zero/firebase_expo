@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Button, StyleSheet, Text, View, TextInput, LogBox } from 'react-native';
+import { Button, StyleSheet, Text, View, TextInput, LogBox, Image } from 'react-native';
 import ImagePicker from './components/ImagePicker'
+import * as FileSystem from 'expo-file-system';
 //Imports necessários
 import * as firebase from 'firebase'
 import 'firebase/firestore'
@@ -17,8 +18,11 @@ LogBox.ignoreLogs(['Setting a timer']);
 //Firebase ===============================
 const db = firebase.firestore()
 const storage = firebase.storage();
-const storageRef = storage.ref();
+
 //========================================
+
+
+
 
 export default function App() {
 
@@ -43,15 +47,32 @@ export default function App() {
     });
   }
 
-  const upload = () => {
-    const workspaceRef = storageRef.child('./imagens/workspace.png')
-    console.log(`Nome ${workspaceRef.name},`)
-    
+  const enviarImagem = async (imageUri) => {
+  
+     let extensao = null;
+     extensao = imageUri.split('.').pop()
+     const fileName = `workspace.${extensao}`
+
+     console.log(imageUri)
+     const response = await fetch(imageUri);
+
+     console.log(response);
+     
+     
   }
+
+  // uploadImage = async (imageUri, imageName) => {
+  //   const response = await fetch(uri);
+  //   const blob = await response.blob();
+
+  //   var ref = firebase.storage().ref().child("imagens/" + imageName);
+  //   return ref.put(blob);
+  // }
 
   return (
     <View style={styles.container}>
       <ImagePicker imageUri={imageUri} setImageUri={setImageUri}/>
+      <Button title='enviar storage' onPress={() => enviarImagem(imageUri)}/>
       {/* <TextInput onChangeText={setNome} style={styles.input} placeholder='Digite um nome'/>
         <View style={{flexDirection: 'row', width: '100%', justifyContent: 'space-around', }}>
         <Button title='enviar' onPress={enviar}/>

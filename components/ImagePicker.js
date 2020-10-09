@@ -28,7 +28,6 @@ const ObterImagem = ({imageUri, setImageUri}) => {
 
             if(!result.cancelled){
               setImageUri(result.uri)
-              console.log('URI:', imageUri)
             }
         } catch (error) {
             console.log('erro ao ler a imagem ',error);
