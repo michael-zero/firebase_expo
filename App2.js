@@ -52,20 +52,12 @@ export default function App() {
   
      let extensao = null;
      extensao = imageUri.split('.').pop()
-     const fileName = `workspace-${extensao}`
+     const fileName = `workspace.${extensao}`
 
-     try {
-      console.log(imageUri)
-      const response = await fetch(imageUri);
-      const blob = await response.blob();
- 
-      var ref = firebase.storage().ref().child("imagens/" + fileName);
-     
-      await ref.put(blob)
-      console.log('Sucesso')
-     } catch (error) {
-       console.log(error)
-     }
+     console.log(imageUri)
+     const response = await fetch(imageUri);
+
+     console.log(response);
      
      
   }
