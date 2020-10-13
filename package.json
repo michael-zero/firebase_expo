@@ -17,7 +17,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.3.tar.gz",
     "react-native-web": "~0.13.12",
     "expo-file-system": "~9.2.0",
-    "expo-intent-launcher": "~8.3.0"
+    "expo-permissions": "~9.3.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"

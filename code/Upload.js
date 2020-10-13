@@ -1,14 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Button, StyleSheet, Text, View, TextInput, LogBox, Image } from 'react-native';
-import ImagePicker from './components/ImagePicker'
+import ImagePicker from '../components/ImagePicker'
 
 
 //Imports necessários
 import * as firebase from 'firebase'
 import 'firebase/firestore'
 
-import {firebaseConfig} from './config'
+import {firebaseConfig} from '../config'
 
 if(firebase.apps.length === 0){
   firebase.initializeApp(firebaseConfig)
@@ -52,12 +52,20 @@ export default function App() {
   
      let extensao = null;
      extensao = imageUri.split('.').pop()
-     const fileName = `workspace.${extensao}`
+     const fileName = `workspace-${extensao}`
 
-     console.log(imageUri)
-     const response = await fetch(imageUri);
-
-     console.log(response);
+     try {
+      console.log(imageUri)
+      const response = await fetch(imageUri);
+      const blob = await response.blob();
+ 
+      var ref = firebase.storage().ref().child("imagens/" + fileName);
+     
+      await ref.put(blob)
+      console.log('Sucesso')
+     } catch (error) {
+       console.log(error)
+     }
      
      
   }

@@ -4,7 +4,7 @@ import * as ImagePicker from 'expo-image-picker'
 import * as firebase from 'firebase';
 import 'firebase/firestore'
 
-import {firebaseConfig} from './config'
+import {firebaseConfig} from '../config'
 
 if(firebase.apps.length === 0){
   firebase.initializeApp(firebaseConfig)
