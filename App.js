@@ -64,9 +64,45 @@ export default function App() {
 
   }
 
+  const listar = async () => {
+      // Create a reference under which you want to list
+      let listRef = storage.ref().child('/imagens');
+      // Find all the prefixes and items.
+
+      const response = await listRef.listAll();
+      let nomePasta = 'imagens'; 
+      
+      response.items.forEach(itemRef => {
+        console.log(itemRef['location'].path_ ,)
+      })
+     
+      //descobre se existe uma pasta com este nome
+      response.prefixes.forEach((pastaRef, i) => {
+        if(pastaRef['location'].path_ === nomePasta){
+          console.log('existe!!!')
+        }
+      })
+
+      
+
+    //   listRef.listAll().then(function(res) {
+    //   res.prefixes.forEach(function(folderRef) {
+    //     console.log('Nome pasta: ', folderRef.name)
+    //   });
+      
+    //   res.items.forEach(function(itemRef) {
+    //     console.log(itemRef.name, itemRef.fullPath)
+    //     // All the items under listRef.
+    //   });
+    // }).catch(function(error) {
+    //   console.log('error: ', error)
+    // });
+  }
+
   const download = () => {
    storage.ref().child('imagens/workspace23.jpg').getDownloadURL().then(async function(url) {
-       
+        //gs://firestorern-55ea3.appspot.com/imagens => caminho
+
         // var xhr = new XMLHttpRequest();
         // xhr.responseType = 'blob';
         // xhr.onload = function(event) {
@@ -95,6 +131,7 @@ export default function App() {
       {img && <Image source={{uri: img}} style={{width: 200, height: 200}}/>}
       <Button title='enviar storage' onPress={() => enviarImagem(imageUri)}/>
       <Button title='download storage' onPress={() => download()}/>
+      <Button title='Listagem' onPress={() => listar()}/>
       {/* <TextInput onChangeText={setNome} style={styles.input} placeholder='Digite um nome'/>
         <View style={{flexDirection: 'row', width: '100%', justifyContent: 'space-around', }}>
         <Button title='enviar' onPress={enviar}/>
